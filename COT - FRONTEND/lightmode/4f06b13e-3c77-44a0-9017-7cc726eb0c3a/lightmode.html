@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login / Signup Form</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: radial-gradient(circle at center, #bfc8ff, #6b79ff);
+    }
+
+    .container {
+      position: relative;
+      width: 850px;
+      height: 520px;
+      background: #fff;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 0 90px rgba(7, 6, 6, 0.2);
+    }
+
+    .form-box {
+      position: absolute;
+      width: 50%;
+      height: 100%;
+      padding: 25px;
+      transition: 0.4s ease-in-out;
+      overflow-y: auto;
+    }
+
+    .form-box h2 {
+      
+      font-size: 28px;
+      color: #333;
+      margin-bottom: 15px;
+    }
+
+    .google-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-bottom: 15px;
+    }
+
+    .google-buttons button {
+      background: #f0f0f0;
+      border: none;
+      border-radius: 50px;
+      border: 1px solid black;
+      padding: 8px 12px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .google-buttons button:hover {
+      background: #e0e0e0;
+    }
+
+    .input-box {
+      width: 100%;
+      margin: 12px 0;
+    }
+    
+    .input-box input,
+    .input-box select {
+      width: 100%;
+      padding: 5px;
+      background: #f0f0f0;
+      border: none;
+      outline: none;
+      border-radius: 50px;
+      border: 1px solid black;
+      font-size: 14px;
+    }
+    
+    .btn {
+      width: 100%;
+      background: #5b3bff;
+      color: #fff;
+      border: none;
+      padding: 10px;
+      border-radius: 50px;
+      font-size: 16px;
+      margin-top: 10px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .btn:hover {
+      background: #3c23f5;
+    }
+
+    .signin-box {
+      left: 0;
+      z-index: 1;
+    }
+
+    .signup-box {
+      right: 0;
+      z-index: 1;
+    }
+
+    /* --- Curved Sliding Panel with Image and Smooth Transition --- */
+    .toggle-box {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 50%;
+      height: 100%;
+      background-image: url(./background.webp);
+      background-size: cover;
+      background-position: center;
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      text-align: center;
+      transition: all 0.8s ease-in-out;
+      z-index: 2;
+      border-radius: 0% 5% 5% 0%;
+      opacity: 1;
+    }
+
+    .toggle-box::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: rgba(91, 59, 255, 0.6);
+      backdrop-filter: blur(0.5px);
+      z-index: -1;
+      border-radius: inherit;
+      transition: opacity 0.8s ease-in-out;
+    }
+
+    .toggle-box h2 {
+      font-size: 28px;
+      z-index: 2;
+    }
+
+    .toggle-box p {
+      margin: 10px 0 20px;
+      font-size: 14px;
+      padding: 0 30px;
+      z-index: 2;
+    }
+    
+    .toggle-box label {
+      background: transparent;
+      border: 2px solid #fff;
+      padding: 10px 25px;
+      border-radius: 50px;
+      color: #fff;
+      cursor: pointer;
+      font-weight: 500;
+      transition: 0.3s;
+      z-index: 2;
+    }
+
+    .toggle-box label:hover {
+      background: #fff;
+      color: #5b3bff;
+    }
+
+    #toggle {
+      display: none;
+    }
+
+    #toggle:checked ~ .toggle-box {
+      left: 50%;
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+      border-radius: 5% 0% 0% 5%;
+      opacity: 1;
+    }
+
+    #toggle:checked ~ .toggle-box::before {
+      opacity: 0.85;
+    }
+
+    #toggle:checked ~ .toggle-box .signin-text {
+      display: none;
+    }
+
+    #toggle:checked ~ .toggle-box .signup-text {
+      display: block;
+    }
+
+    .signup-text {
+      display: none;
+    }
+
+    .forgot {
+      text-align: right;
+      display: block;
+      margin-top: 5px;
+      color: #777;
+      font-size: 13px;
+      text-decoration: none;
+      transition: 0.3s;
+    }
+
+    .forgot:hover {
+      color: #5b3bff;
+    }
+
+    @media (max-width: 860px) {
+      .container {
+        width: 90%;
+        height: auto;
+      }
+
+      .form-box {
+        width: 100%;
+        position: relative;
+      }
+
+      .toggle-box {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <input type="checkbox" id="toggle">
+
+    <!-- Sign In Form -->
+    <div class="form-box signin-box">
+      <h2>Sign In</h2>
+      <div class="google-buttons">
+        <button>Login with Google</button>
+        <button>Login with Facebook</button>
+      </div>
+      <!-- <p style="text-align:center;color:#777;">or Login with your email address</p> -->
+<br>
+      <form>
+        <div class="input-box">
+          Name/Email
+          <input type="text" placeholder="Username/Email" required>
+        </div>
+        <div class="input-box">
+          Password
+          <input type="password" placeholder="Password" required>
+        </div>
+        <a href="#" class="forgot">Forgot your password?</a>
+        <button type="submit" class="btn">Sign In</button>
+      </form>
+    </div>
+
+    <!-- Sign Up Form -->
+    <div class="form-box signup-box">
+      <h2>Create Account</h2>
+      <p style="text-align:center;color:#777;">Use your email for registration</p>
+      <form>
+        <div class="input-box">
+          <input type="text" placeholder="Username" required>
+        </div>
+        <div class="input-box">
+          <input type="email" placeholder="Email" required>
+        </div>
+        <div class="input-box">
+          <input type="password" placeholder="Password" required>
+        </div>
+        <div class="input-box">
+          <input type="password" placeholder="Re-enter Password" required>
+        </div>
+        <div class="input-box">
+          <label style="font-size:13px;color:#555;">Date of Birth</label>
+          <input type="date" required>
+        </div>
+        <div class="input-box">
+          <label style="font-size:13px;color:#555;" class="select">Gender</label>
+          <select required >
+            <option value="">Select Gender</option>
+            <option>Male</option>
+            <option>Female</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <button type="submit" class="btn">Sign Up</button>
+      </form>
+    </div>
+
+    <!-- Sliding Toggle Panel -->
+    <div class="toggle-box">
+      <div class="signin-text">
+        <h2>Hello, Friend!</h2>
+        <p>Register with your personal details to use all site features</p>
+        <label for="toggle">LogIn</label>
+      </div>
+      <div class="signup-text">
+        <h2>Welcome Back!</h2>
+        <p>Don't have an Account?</p>
+        <label for="toggle">Sign Up</label>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

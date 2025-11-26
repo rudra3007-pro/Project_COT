@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CoT.AI</title>
+    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+</head>
+
+<body>
+    <div class="home">
+        <div class="left"></div>
+        <div class="right">
+            <form action="signup-form" method="post">
+                <h1>Create Account</h1>
+                <div class="input-group">
+                    <i class="fas fa-user icon"></i>
+                    <input type="text" placeholder="Enter your name" id="name" required>
+                </div>
+                <div class="input-group">
+                    <i class="fas fa-envelope icon"></i>
+                    <input type="email" placeholder="Enter your email" id="email" required>
+                </div>
+                <div class="input-group">
+                    <i class="fas fa-lock icon"></i>
+                    <input type="password" placeholder="Enter password" id="pass1" required>
+                    <i class="fa-solid fa-eye toggle-pass" id="toggle1"></i>
+                </div>
+                <div class="input-group">
+                    <i class="fas fa-lock icon"></i>
+                    <input type="password" placeholder="Confirm password" id="pass2" required>
+                    <i class="fa-solid fa-eye toggle-pass" id="toggle2"></i>
+                </div>
+                <div class="input-group">
+                    <i class="fas fa-calendar icon"></i>
+                    <input type="date" id="dob" required>
+                </div>
+                <button type="submit" id="signup-button">Sign Up</button>
+                <p class="bottom-text">Already have an account?
+                    <a href="../lightmode/lightmode.html">Login</a>
+                </p>
+            </form>
+        </div>
+    </div>
+    <script>
+        function toggle(id, iconId) {
+            const input = document.getElementById(id);
+            const icon = document.getElementById(iconId);
+            icon.addEventListener("click", () => {
+                input.type = input.type === "password" ? "text" : "password";
+                icon.classList.toggle("fa-eye");
+                icon.classList.toggle("fa-eye-slash");
+            });
+        }
+        toggle("pass1", "toggle1");
+        toggle("pass2", "toggle2");
+    </script>
+</body>
+
+</html>

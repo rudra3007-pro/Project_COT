@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Smart Search Box</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: "Poppins", sans-serif;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: radial-gradient(circle at 50% 50%, #0d1117, #000);
+    color: white;
+  }
+
+  /* === Search Box === */
+  .search-container {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: center;
+    border: 2px solid transparent;
+    border-radius: 15px;
+    background-image: linear-gradient(90deg, #161b22, #161b22),
+                      linear-gradient(90deg, #F7C58E, #A6F4A0, #A8EFFF);
+    /* background-blend-mode: darken; */
+    background-origin: border-box;
+    background-clip: padding-box, border-box;
+    padding: 18px 22px;
+    width: 480px;
+    box-shadow: 0 0 15px rgba(168,239,255,0.25);
+    animation: glowBreath 6s ease-in-out infinite;
+  }
+
+  /* Softer, slower glow */
+  @keyframes glowBreath {
+    0%, 100% { box-shadow: 0 0 8px rgba(168, 239, 255, 0.15); }
+    50% { box-shadow: 0 0 18px rgba(168, 239, 255, 0.25); }
+  }
+
+  .input-area {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  input {
+    background-color: #0d1117;
+    color: white;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    height: 45px;
+    border-radius: 8px;
+    padding: 0 12px;
+    width: 80%;
+    transition: all 0.3s ease;
+  }
+
+  input:focus {
+  width: 85%;
+  box-shadow: 0 0 3px rgba(168, 239, 255, 0.6);
+  transition: all 0.25s ease-in-out;
+}
+
+  .send-btn {
+    background: linear-gradient(135deg, #00c853, #00e676);
+    border: none;
+    color: white;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    font-size: 20px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s;
+  }
+
+  .send-btn:hover { transform: scale(1.1); }
+
+  .icons {
+    display: flex;
+    margin-top: 15px;
+    gap: 20px;
+    justify-content: left;
+  }
+
+  .icons i {
+    font-size: 22px;
+    cursor: pointer;
+    opacity: 0.8;
+    transition: 0.25s;
+  }
+
+  .icons i:hover {
+    opacity: 1;
+    transform: scale(1.2);
+    text-shadow: 0 0 10px #A8EFFF, 0 0 20px #A8EFFF;
+  }
+
+  .suggestions {
+    margin-top: 8px;
+    background: #161b22;
+    border-radius: 8px;
+    padding: 8px;
+    display: none;
+    flex-direction: column;
+  }
+
+  .suggestions div {
+    padding: 6px;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: 0.2s;
+  }
+
+  .suggestions div:hover { background: #1f2937; }
+
+  .message {
+    margin-top: 10px;
+    min-height: 25px;
+    color: #cc6464;
+    text-align: left;
+  }
+
+  /* Ripple Effect */
+  .ripple {
+    position: absolute;
+    border-radius: 50%;
+    transform: scale(0);
+    animation: ripple 0.6s linear;
+    background-color: rgba(255, 255, 255, 0.5);
+    pointer-events: none;
+  }
+
+  @keyframes ripple {
+    to { transform: scale(4); opacity: 0; }
+  }
+</style>
+</head>
+<body>
+
+<div class="search-container">
+  <div class="input-area">
+    <input id="userInput" type="text" placeholder="What do you wanna do today?">
+    <button class="send-btn" id="sendBtn"><i class="fa-solid fa-arrow-up"></i></button>
+  </div>
+
+  <div class="suggestions" id="suggestions"></div>
+
+  <div class="icons">
+    <i class="fa-solid fa-microphone" id="micBtn"></i>
+    <i class="fa-solid fa-paperclip" id="attachBtn"></i>
+    <i class="fa-solid fa-wand-magic-sparkles" id="aiBtn"></i>
+  </div>
+
+  <div class="message" id="messageArea"></div>
+  <input type="file" id="fileInput" style="display:none;">
+</div>
+
+<script>
+/* === SMART SEARCH + AI AUTOCOMPLETE === */
+const input = document.getElementById("userInput");
+const sendBtn = document.getElementById("sendBtn");
+const messageArea = document.getElementById("messageArea");
+const fileInput = document.getElementById("fileInput");
+const suggestions = document.getElementById("suggestions");
+
+/* === SMART DATASET (AI-like) === */
+const smartSuggestions = [
+  "ISRO latest mission",
+  "ISRO 2025 launches",
+  "Chandrayaan-3 landing site",
+  "Mangalyaan orbit data",
+  "SpaceX Starship update",
+  "James Webb telescope images",
+  "NASA Artemis mission",
+  "AI coding tools 2025",
+  "ChatGPT advanced prompts",
+  "Web development roadmap",
+  "JavaScript ES2025 features",
+  "Quantum computing basics",
+  "Machine learning projects",
+  "Best Python libraries 2025",
+  "Weather today",
+  "Breaking news headlines",
+  "Motivational quotes",
+  "Inspirational science facts",
+  "NASA vs ISRO collaborations",
+  "Top AI research papers"
+];
+
+/* === 🔍 Google Search === */
+function searchGoogle(query) {
+  if (query) {
+    const googleUrl = "https://www.google.com/search?q=" + encodeURIComponent(query);
+    window.open(googleUrl, "_blank");
+    showMessage("🔍 Searching for: " + query, "info");
+    input.value = "";
+    suggestions.style.display = "none";
+    sendBtn.classList.add("sending");
+    setTimeout(() => sendBtn.classList.remove("sending"), 600);
+  } else showMessage("⚠ Please type something first!", "error");
+}
+
+/* === 🎤 Voice Input === */
+document.getElementById("micBtn").addEventListener("click", e => {
+  rippleEffect(e);
+  if ("webkitSpeechRecognition" in window) {
+    const recognition = new webkitSpeechRecognition();
+    recognition.lang = "en-IN";
+    recognition.continuous = false;
+    recognition.interimResults = false;
+    showMessage("🎙 Listening...", "info");
+    recognition.start();
+    recognition.onresult = (event) => {
+      const voiceText = event.results[0][0].transcript;
+      input.value = voiceText;
+      showMessage("🎤 You said: " + voiceText, "success");
+      searchGoogle(voiceText);
+    };
+    recognition.onend = () => showMessage("🎧 Voice input ended.", "info");
+  } else alert("Your browser does not support voice recognition.");
+});
+
+/* === 📎 File Attach === */
+document.getElementById("attachBtn").addEventListener("click", e => { rippleEffect(e); fileInput.click(); });
+fileInput.addEventListener("change", () => {
+  if (fileInput.files.length > 0)
+    showMessage("📎 File attached: " + fileInput.files[0].name, "success");
+});
+
+/* === ✨ AI Quotes === */
+const aiMessages = [
+  "🚀 Keep pushing boundaries!",
+  "💡 Every click brings you closer to success!",
+  "🌟 Believe in your potential!",
+  "🔥 You are unstoppable!",
+  "🌈 Make today extraordinary!"
+];
+document.getElementById("aiBtn").addEventListener("click", e => {
+  rippleEffect(e);
+  showTyping("🤖 Thinking...");
+  setTimeout(() => {
+    const randomMsg = aiMessages[Math.floor(Math.random() * aiMessages.length)];
+    messageArea.textContent = randomMsg;
+    messageArea.style.color = "#58ff9b";
+  }, 1500);
+});
+
+/* === 💬 Placeholder Typing === */
+const placeholders = ["Search anything...", "Ask AI something...", "Find inspiration...", "Plan your day..."];
+let i = 0;
+setInterval(() => { input.placeholder = placeholders[i++ % placeholders.length]; }, 3000);
+
+/* === 🧠 AI AUTOCOMPLETE SUGGESTIONS === */
+let activeIndex = -1;
+
+input.addEventListener("input", () => {
+  const val = input.value.toLowerCase();
+  suggestions.innerHTML = "";
+  activeIndex = -1;
+
+  if (!val) return (suggestions.style.display = "none");
+
+  // rank matches (closer matches appear first)
+  const filtered = smartSuggestions
+    .map((s, i) => ({
+      text: s,
+      score: similarity(s.toLowerCase(), val)
+    }))
+    .filter(item => item.score > 0)
+    .sort((a, b) => b.score - a.score)
+    .slice(0, 5);
+
+  if (filtered.length === 0) {
+    suggestions.style.display = "none";
+    return;
+  }
+
+  filtered.forEach((item, idx) => {
+    const div = document.createElement("div");
+    div.textContent = item.text;
+    div.onclick = () => {
+      input.value = item.text;
+      suggestions.style.display = "none";
+      searchGoogle(item.text);
+    };
+    if (idx === 0) div.classList.add("active");
+    suggestions.appendChild(div);
+  });
+
+  suggestions.style.display = "flex";
+});
+
+/* === Keyboard Navigation for Suggestions === */
+input.addEventListener("keydown", e => {
+  const items = suggestions.querySelectorAll("div");
+  if (!items.length) return;
+
+  if (e.key === "ArrowDown") {
+    activeIndex = (activeIndex + 1) % items.length;
+    updateActive(items);
+  } else if (e.key === "ArrowUp") {
+    activeIndex = (activeIndex - 1 + items.length) % items.length;
+    updateActive(items);
+  } else if (e.key === "Enter") {
+    e.preventDefault();
+    if (activeIndex >= 0) {
+      items[activeIndex].click();
+    } else searchGoogle(input.value.trim());
+  }
+});
+
+function updateActive(items) {
+  items.forEach(item => item.classList.remove("active"));
+  if (activeIndex >= 0) items[activeIndex].classList.add("active");
+}
+
+/* === Simple Fuzzy Similarity Function === */
+function similarity(a, b) {
+  if (a.includes(b)) return 1;
+  let matches = 0;
+  for (let i = 0; i < b.length; i++)
+    if (a.includes(b[i])) matches++;
+  return matches / a.length;
+}
+
+/* === 🌊 Ripple Effect === */
+function rippleEffect(e) {
+  const target = e.currentTarget;
+  const ripple = document.createElement("span");
+  ripple.classList.add("ripple");
+  const rect = target.getBoundingClientRect();
+  ripple.style.left = `${e.clientX - rect.left}px`;
+  ripple.style.top = `${e.clientY - rect.top}px`;
+  target.appendChild(ripple);
+  setTimeout(() => ripple.remove(), 600);
+}
+
+/* === 💬 Show / Hide Messages === */
+function showMessage(text, type = "info") {
+  messageArea.textContent = text;
+  messageArea.style.opacity = 1;
+  messageArea.style.color =
+    type === "error" ? "#ff6b6b" :
+    type === "success" ? "#7ef9a0" : "#a8e8ff";
+  setTimeout(() => {
+    messageArea.style.transition = "opacity 0.8s";
+    messageArea.style.opacity = 0;
+  }, 4000);
+}
+
+/* === ⏳ Typing Dots for AI === */
+function showTyping(text) {
+  messageArea.textContent = text;
+  messageArea.style.color = "#a8e8ff";
+  let dots = 0;
+  const interval = setInterval(() => {
+    messageArea.textContent = text + ".".repeat(dots++);
+    if (dots > 3) dots = 0;
+  }, 300);
+  setTimeout(() => clearInterval(interval), 1500);
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Assistant</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      background-color: #0b1120;
+      color: white;
+      font-family: "Poppins", sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    #toggleSidebar { display: none; }
+
+    .label {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      background-color: #1a233a;
+      color: white;
+      padding: 10px 18px;
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: bold;
+      cursor: pointer;
+      z-index: 1001;
+    }
+
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: -300px;
+      width: 250px;
+      height: 100%;
+      background-color: #111a2d;
+      color: white;
+      transition: all 0.4s ease;
+      padding: 20px;
+      z-index: 1002;
+    }
+
+    #toggleSidebar:checked ~ .sidebar { left: 0; }
+    #toggleSidebar:checked + .label { opacity: 0; pointer-events: none; }
+
+    .sidebar h3 {
+      margin: 0 0 15px;
+      font-size: 18px;
+      border-bottom: 1px solid #2b3d5f;
+      padding-bottom: 8px;
+    }
+
+    .sidebar ul { list-style: none; padding: 0; margin: 0; }
+    .sidebar ul li {
+      margin: 15px 0;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .overlay {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.4);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s;
+      z-index: 1000;
+    }
+
+    #toggleSidebar:checked ~ label.overlay {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .logo {
+      width: 160px;
+      height: 160px;
+      border-radius: 50%;
+      background-color: transparent;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 25px;
+    }
+
+    .logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+    }
+
+    h1, h2 {
+      text-align: center;
+      margin: 5px 0;
+    }
+
+    /* Clean gradient border without glow */
+    .search-container {
+      position: relative;
+      background: #101b35;
+      border-radius: 10px;
+      padding: 15px 20px;
+      display: flex;
+      flex-direction: column;
+      width: 420px;
+
+      border: 2px solid transparent;
+      background-image: linear-gradient(#101b35, #101b35),
+                        linear-gradient(90deg, #F7C58E, #A6F4A0, #A8EFFF);
+      background-origin: border-box;
+      background-clip: padding-box, border-box;
+      box-shadow: none; /* glow fully removed */
+    }
+
+    .input-area {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    input[type="text"] {
+      flex: 1;
+      border: 1px solid #0e1730;
+      outline: none;
+      font-size: 16px;
+      height: 40px;
+      border-radius: 6px;
+      padding: 0 10px;
+      background: #0e1730;
+      color: white;
+      transition: border 0.3s ease;
+    }
+
+    input[type="text"]:hover,
+    input[type="text"]:focus {
+      border: 1px solid rgba(168,239,255,0.4);
+    }
+
+    .send-btn {
+      background: #00c853;
+      border: none;
+      outline: none;
+      color: white;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      font-size: 18px;
+      cursor: pointer;
+      margin-left: 10px;
+      box-shadow: none; /* glow removed */
+      transition: transform 0.25s ease, background 0.25s ease;
+    }
+
+    .send-btn:hover {
+      transform: scale(1.1);
+      background: linear-gradient(90deg, #00c853, #3ddc84);
+    }
+
+    .icons {
+      display: flex;
+      justify-content: start;
+      gap: 15px;
+      margin-top: 10px;
+    }
+
+    .icons i {
+      font-size: 20px;
+      color: white;
+      opacity: 0.8;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .icons i:hover {
+      color: #A8EFFF;
+    }
+
+    #fileInput, #audioInput, #magicInput { display: none; }
+  </style>
+</head>
+<body>
+
+  <input type="checkbox" id="toggleSidebar">
+  <label for="toggleSidebar" class="label">AI Assistant</label>
+
+  <div class="sidebar">
+    <h3>Menu</h3>
+    <ul>
+      <li>Home</li>
+      <li>New Chat</li>
+      <li>Library</li>
+      <li>History</li>
+      <li>Topic Names</li>
+    </ul>
+  </div>
+
+  <label for="toggleSidebar" class="overlay"></label>
+
+  <div class="logo">
+    <img src="WhatsApp Image 2025-11-10 at 23.28.13_84920125.jpg" alt="Logo">
+  </div>
+
+  <h1>Hi there,</h1>
+  <h2>What would you like to know?</h2>
+
+  <div class="search-container">
+    <div class="input-area">
+      <input type="text" placeholder="What do you wanna do today?">
+      <button class="send-btn"><i class="fa-solid fa-arrow-up"></i></button>
+    </div>
+
+    <div class="icons">
+      <label for="audioInput"><i class="fa-solid fa-microphone"></i></label>
+      <input type="file" id="audioInput" accept="audio">
+
+      <label for="fileInput"><i class="fa-solid fa-paperclip"></i></label>
+      <input type="file" id="fileInput">
+
+      <label for="magicInput"><i class="fa-solid fa-wand-magic-sparkles"></i></label>
+      <input type="file" id="magicInput">
+    </div>
+  </div>
+
+</body>
+</html>

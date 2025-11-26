@@ -1,0 +1,320 @@
+/* -------------------- BASE GLOBAL STYLES -------------------- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    color: #E4E9F7;
+}
+
+body {
+    height: 100vh;
+    background: linear-gradient(-45deg, #d67bec, #90c1d3, #7780e0, #9c9fb5);
+    animation: gradient-shift 15s ease infinite;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow-x: hidden;
+}
+
+@keyframes gradient-shift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* -------------------- MAIN CONTAINER -------------------- */
+.home {
+    display: flex;
+    align-items: center;
+
+    height: 58vh;          /* reduced */
+    width: 68vw;           /* increased */
+
+    border-radius: 15px;
+    box-shadow: 0 5px 40px #5c6cc6;
+    background: linear-gradient(-45deg, #dbaae7, #90c1d3, #525ee8, #9c9fb5);
+    overflow: hidden;
+    min-width: 480px;
+    transition: .3s ease-in-out;
+}
+
+/* -------------------- LEFT LOGO PANEL -------------------- */
+.left {
+    background-image: url('./WhatsApp Image 2025-11-15 at 10.03.18 PM.jpeg');
+    background-size: contain;  
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: #88a9cb;
+
+    height: 100%;
+    width: 32vw;                /* increased width */
+
+    min-width: 240px;           /* increased */
+    max-width: 360px;
+
+    border-radius: 15px 0 0 15px;
+    box-shadow: inset 0 0 10px #5968D6;
+    transition: all 0.35s ease;
+}
+
+
+/* -------------------- RIGHT LOGIN FORM -------------------- */
+.right {
+    padding: 0.6% 0.4%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: calc(100% - 32vw);   /* fits new left width */
+    min-width: 260px;
+    transition: .3s ease;
+}
+
+
+/* -------------------- FORM WRAPPER -------------------- */
+.form-wrapper {
+    width: 100%;
+    max-width: 310px;
+    display: flex;
+    flex-direction: column;
+    padding-left: 10%;
+}
+
+/* -------------------- TITLE -------------------- */
+h1 {
+    font-size: 2.2rem;
+    font-weight: 800;
+    text-align: center;
+    letter-spacing: 1px;
+
+    color: #1b1f3b;   /* deep navy blue – highly visible */
+
+    text-shadow: 0 1px 2px rgba(0,0,0,0.25);
+
+    margin-bottom: 16px;
+    position: relative;
+}
+
+/* Minimal underline for clean premium look */
+h1::after {
+    content: "";
+    width: 55px;
+    height: 3px;
+
+    background: #2c3e8f;   /* darker accent bar */
+    position: absolute;
+
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+
+    border-radius: 2px;
+    opacity: 0.85;
+}
+
+
+/* -------------------- INPUT GROUP -------------------- */
+.input-group {
+    position: relative;
+    width: 100%;
+}
+
+.input-group ::placeholder {
+    color: #614d86;
+}
+
+.input-group input {
+    width: 100%;
+    height: 2.2rem;
+    padding: 0 5% 0% 11%;
+    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.08);
+    background: rgba(102, 120, 218, 0.8);
+    color: #03050e;
+    font-size: 14px;
+    transition: 0.2s ease;
+}
+
+/* Icons */
+.input-group .icon {
+    position: absolute;
+    top: 50%;
+    left: 5%;
+    transform: translateY(-50%);
+    font-size: 15px;
+    color: #374691;
+}
+
+/* Eye toggle icon */
+.input-group .toggle-pass {
+    position: absolute;
+    right: 5%;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 15px;
+    cursor: pointer;
+    color: #13226b;
+}
+
+.input-group .toggle-pass:hover {
+    color: rgb(79, 45, 134);
+}
+
+.input-group input:focus {
+    outline: none;
+    border: 1px solid #6C7FF5;
+    box-shadow: 0 0 12px #6C7FF5;
+}
+
+/* -------------------- BUTTON -------------------- */
+#sign-up {
+    height: 38px;
+    width: 100%;
+    border-radius: 10px;
+    border: none;
+    font-size: 15px;
+    font-weight: bold;
+    background: linear-gradient(to bottom right, #5E8BFF, #A970FF, #F26DFF);
+    color: #3d3dc0;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+#sign-up:hover {
+    box-shadow: 0 0 18px rgba(26, 31, 100, 0.7);
+    transform: scale(1.05);
+}
+
+/* -------------------- SIGNUP TEXT -------------------- */
+.signup-text {
+    text-align: center;
+    font-size: 13px;
+    color: #1b1f3b;          /* dark for visibility */
+    margin-top: 12px;
+}
+
+.signup-text a {
+    color: #2c3e8f;          /* matching dark-accent */
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.signup-text a:hover {
+    text-decoration: underline;
+    color: #4056d1;
+}
+
+
+/* -------------------- TABLET RESPONSIVE -------------------- */
+/* -------------------- IMPROVED TABLET VIEW -------------------- */
+@media screen and (max-width: 920px) and (min-width: 600px) {
+
+    .home {
+        width: 86vw;             /* wider for better proportion */
+        height: 62vh;            /* slightly reduced height */
+        border-radius: 18px;
+    }
+
+    .left {
+        width: 40vw;             /* more space for logo */
+        min-width: 230px;
+        max-width: 340px;
+
+        background-size: contain;
+        background-position: center;
+        background-color: #9bc4e8;
+
+        border-radius: 18px 0 0 18px;
+        box-shadow: inset 0 0 18px #5b68d3;
+    }
+
+    .right {
+        width: 48%;
+        padding: 0 4%;
+    }
+
+    .form-wrapper {
+        max-width: 330px;
+        padding-left: 0;
+    }
+
+    h1 {
+        font-size: 1.7rem;
+        margin-bottom: 10px;
+    }
+
+    .input-group input {
+        height: 2.4rem;
+        font-size: 15px;
+        padding: 0 12% 0 13%;
+    }
+
+    #sign-up {
+        height: 42px;
+        font-size: 16px;
+    }
+
+    .signup-text {
+        font-size: 13px;
+        margin-top: 8px;
+    }
+}
+
+
+
+/* -------------------- MOBILE LAYOUT -------------------- */
+@media screen and (max-width: 600px) {
+
+    .home {
+        flex-direction: column;
+        width: 90vw;
+        height: auto;
+        padding: 20px 0;
+    }
+
+    .left {
+        width: 70vw;           
+        height: 200px;
+        min-width: 180px;
+        max-width: 300px;
+
+        border-radius: 12px;
+        margin-bottom: 22px;
+
+        background-size: contain; /* keeps full image visible */
+    }
+
+    .right {
+        width: 100%;
+        padding: 0;
+    }
+
+    .form-wrapper {
+        max-width: 300px;
+        width: 100%;
+        padding: 10px 0;
+    }
+
+    .input-group input {
+        padding: 12px 40px;
+        width: 100%;
+    }
+
+    #sign-up {
+        width: 100%;
+    }
+}
+
+/* -------------------- VERY SMALL PHONES -------------------- */
+@media screen and (max-width: 380px){
+    .left {
+        width: 60vw;
+        height: 160px;
+        min-width: 150px;
+    }
+
+    h1 {
+        font-size: 1.28rem;
+    }
+}

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="lightmode.css">
+</head>
+<body>
+    <div class="home">
+        <div class="left"></div>
+        <div class="right">
+            <div class="form-wrapper">
+                <form action="login-form" method="post">
+                    <h1>LogIn</h1><br>
+                    <div class="input-group">
+                        <i class="icon fas fa-envelope"></i>
+                        <input type="email" placeholder="Enter email" id="email" required>
+                    </div><br>
+                    <div class="input-group">
+                        <i class="icon fas fa-lock"></i>
+                        <input type="password" id="pass" placeholder="Enter password" required>
+                        <i class="toggle-pass fas fa-eye" id="Password"></i>
+                    </div><br>
+                    <button id="sign-up">Login</button><br><br>
+                </form>
+                <p class="signup-text">
+                    Don't have an account? <a href="../signup/index.html">Sign up</a>
+                </p>
+            </div>
+        </div>
+    </div>
+    <script>
+        const passwordInput = document.getElementById("pass");
+        const togglePassword = document.getElementById("Password");
+        togglePassword.addEventListener("click", () => {
+            const type = passwordInput.type === "password" ? "text" : "password";
+            passwordInput.type = type;
+            togglePassword.classList.toggle("fa-eye");
+            togglePassword.classList.toggle("fa-eye-slash");
+        });
+    </script>
+</body>
+</html>

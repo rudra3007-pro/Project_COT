@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login / Signup Form</title>
+ <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <input type="checkbox" id="toggle">
+
+    <!-- Sign In Form -->
+    <div class="form-box signin-box">
+      <h2>Login</h2>
+      <div class="google-buttons">
+        <button>Login with Google</button>
+        <button>Login with Facebook</button>
+      </div>
+      <p style="text-align:center;color:#777;">or Login with your email address</p>
+
+      <form>
+        <div class="input-box">
+          <input type="text" placeholder="Username/Email" required>
+        </div>
+        <div class="input-box">
+          <input type="password" placeholder="Password" required>
+        </div>
+        <a href="#" class="forgot">Forgot your password?</a>
+        <button type="submit" class="btn">Sign In</button>
+      </form>
+    </div>
+
+    <!-- Sign Up Form -->
+    <div class="form-box signup-box">
+      <h2>Create Account</h2>
+      <p style="text-align:center;color:#777;">Use your email for registration</p>
+      <form>
+        <div class="input-box">
+          <input type="text" placeholder="Username" required>
+        </div>
+        <div class="input-box">
+          <input type="email" placeholder="Email" required>
+        </div>
+        <div class="input-box">
+          <input type="password" placeholder="Password" required>
+        </div>
+        <div class="input-box">
+          <input type="password" placeholder="Re-enter Password" required>
+        </div>
+        <div class="input-box">
+          <label style="font-size:13px;color:#555;">Date of Birth</label>
+          <input type="date" required>
+        </div>
+        <div class="input-box">
+          <label style="font-size:13px;color:#555;">Gender</label>
+          <select required>
+            <option value="">Select Gender</option>
+            <option>Male</option>
+            <option>Female</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <button type="submit" class="btn">Sign Up</button>
+      </form>
+    </div>
+
+    <!-- Sliding Toggle Panel -->
+    <div class="toggle-box">
+      <div class="signin-text">
+        <h2>Hello, Friend!</h2>
+        <p>Register with your personal details to use all site features</p>
+        <label for="toggle">LogIn</label>
+      </div>
+      <div class="signup-text">
+        <h2>Welcome Back!</h2>
+        <p>Don't have an Account?</p>
+        <label for="toggle">Sign Up</label>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

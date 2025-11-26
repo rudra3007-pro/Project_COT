@@ -1,0 +1,242 @@
+/* RESET */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+    color: #0f133d; /* dark text like login */
+}
+
+body {
+    height: 100vh;
+    background: linear-gradient(-45deg, #d67bec, #90c1d3, #7780e0, #9c9fb5);
+    animation: gradient-shift 15s ease infinite;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+@keyframes gradient-shift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* MAIN CONTAINER (Same as Login) */
+.home {
+    display: flex;
+    align-items: center;
+    height: 70vh;
+    width: 55vw;
+    min-width: 460px;
+
+    background: linear-gradient(-45deg, #dbaae7, #90c1d3, #525ee8, #9c9fb5);
+    box-shadow: 0 5px 40px #3d4aa4;
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+/* LEFT LOGO PANEL */
+.left {
+    background-image: url('../lightmode/WhatsApp Image 2025-11-15 at 10.03.18 PM.jpeg');
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: #88a9cb;
+
+    width: 28vw;
+    min-width: 230px;
+    height: 100%;
+
+    border-radius: 15px;
+    box-shadow: inset 0 0 10px #5660ae;
+}
+
+/* RIGHT PANEL */
+.right {
+    width: 48%;
+    padding: 0 10px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* FORM */
+form {
+    width: 100%;
+    max-width: 280px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+/* HEADINGS EXACTLY SAME AS LOGIN */
+h1 {
+    text-align: center;
+    font-size: 2rem;
+    font-weight: 800;
+    color: #1b1f3b;
+    letter-spacing: 1px;
+
+    margin-bottom: 6px;
+
+    position: relative;
+}
+
+h1::after {
+    content: "";
+    width: 60px;
+    height: 3px;
+    background: #2c3e8f;
+
+    position: absolute;
+    bottom: -6px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 3px;
+}
+
+/* INPUT BOXES */
+.input-group {
+    position: relative;
+}
+
+.input-group input {
+    width: 100%;
+    height: 2.4rem;
+    padding: 0 45px;
+
+    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.08);
+
+    background: rgba(102,120,218,0.8);
+    color: #0f133d;
+
+    font-size: 14px;
+    transition: .2s ease;
+}
+
+.input-group input::placeholder {
+    color: #614d86;
+}
+
+.input-group input:focus {
+    border: 1px solid #6C7FF5;
+    box-shadow: 0 0 12px #6C7FF5;
+}
+
+/* ICONS LEFT */
+.icon {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+
+    color: #374691;
+    font-size: 16px;
+}
+
+/* SHOW/HIDE PASSWORD ICON */
+.toggle-pass {
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+
+    font-size: 16px;
+    cursor: pointer;
+    color: #13226b;
+}
+
+.toggle-pass:hover {
+    color: #402486;
+}
+
+/* BUTTON EXACT SAME AS LOGIN */
+#signup-button {
+    height: 40px;
+    width: 100%;
+
+    border-radius: 10px;
+    border: none;
+    font-size: 15px;
+    font-weight: bold;
+
+    background: linear-gradient(to bottom right, #5E8BFF, #A970FF, #F26DFF);
+    color: #3d3dc0;
+
+    cursor: pointer;
+    transition: .2s;
+}
+
+#signup-button:hover {
+    box-shadow: 0 0 18px rgba(26,31,100,0.7);
+    transform: scale(1.05);
+}
+
+/* BOTTOM TEXT */
+.bottom-text {
+    text-align: center;
+    font-size: 12px;
+    margin-top: 4px;
+    color: #1b1f3b;
+}
+
+.bottom-text a {
+    color: #2c3e8f;
+    text-decoration: none;
+}
+
+.bottom-text a:hover {
+    text-decoration: underline;
+}
+
+/* MOBILE SAME AS LOGIN */
+@media screen and (max-width: 600px) {
+
+    .home {
+        flex-direction: column;
+        width: 100vw;
+        height: 100vh;
+        border-radius: 0;
+        box-shadow: none;
+        padding: 0;
+    }
+
+    .left {
+        display: none;
+    }
+
+    .right {
+        width: 100%;
+        height: 100%;
+        border-radius: 0;
+        background: linear-gradient(-45deg, #dbaae7, #90c1d3, #525ee8, #9c9fb5);
+    }
+
+    form {
+        max-width: 90vw;
+        padding-top: 30px;
+    }
+
+    h1 {
+        font-size: 1.5rem;
+    }
+
+    .input-group input {
+        height: 2.6rem;
+        font-size: 15px;
+    }
+
+    #signup-button {
+        height: 44px;
+        font-size: 16px;
+    }
+
+    .bottom-text {
+        font-size: 14px;
+        padding-bottom: 20px;
+    }
+}
