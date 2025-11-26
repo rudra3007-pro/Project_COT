@@ -194,7 +194,7 @@
 
 // STRINGS
 
-//Collection of characters
+// Collection of characters
 // let name = "rudra";
 // // console.log(name.length);
 
@@ -309,7 +309,7 @@
 // }
 
 
-// console.ckear(444>555);
+// console.cear(444>555);
 // console.clear();
 
 // let a  = prompt("Enter the color:");
@@ -322,7 +322,7 @@
 
 // console.log(document.body.parentElement)
 
-let a = document.getElementById("inp");
+// let a = document.getElementById("inp");
 
 
 
